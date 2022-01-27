@@ -1,9 +1,4 @@
-
-
 import random
-
-
-
 
 def StartGame():
     low = 1
@@ -31,7 +26,7 @@ def PlayGame(personalBest, low, high):
     tries = 0
     while True:
         guess = input()
-        if not guess.isnumeric():
+        if not guess.isdigit():
             continue
 
         tries += 1
@@ -69,10 +64,7 @@ def ChangeHigh(low):
                 return int(newHigh)
             else:
                 print('New high must be higher then ' + str(low))
-        
-
-
-
+       
 def PrintMenu():
     print('Select option')
     print('1. Play')

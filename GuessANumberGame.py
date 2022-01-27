@@ -51,7 +51,7 @@ def ChangeLow():
     while True:
         print('Input new low')
         newLow = input()
-        if(newLow.isnumeric()):
+        if(newLow.isdigit()):
             return int(newLow)
 
 def ChangeHigh(low):
@@ -59,7 +59,7 @@ def ChangeHigh(low):
     while True:
         print('Input new high')
         newHigh = input()
-        if newHigh.isnumeric():
+        if newHigh.isdigit():
             if int(newHigh) > low:
                 return int(newHigh)
             else:

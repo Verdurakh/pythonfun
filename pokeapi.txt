@@ -1,0 +1,85 @@
+Advanced usecase, using apis, fetching data and producing results.
+
+Pokemon is a big game series that have several games and almost 900 pokemon exists in those games.
+
+But it all started on generation 1 called Pokemon Red and Pokemon Blue, in total only 151 pokemon existed in 1996.
+
+This game is so popular that there is an api for all it's data : https://pokeapi.co/docs/v2#info
+
+A pokemon is a creature that have some attributes.
+All pokemons have
+id:1
+name: Bulbasaur
+types: grass and poision (can be one or more)
+
+Another one:
+id:4
+name: charmander
+types: fire
+
+There are more attributes for each pokemon but for this task only the above ones are interesting.
+
+using the pokeapi we can go to this website : https://pokeapi.co/api/v2/pokemon/4 to see all data about Charmander.
+If we want a list of 10 first pokemons we can go to https://pokeapi.co/api/v2/pokemon/?limit=10
+
+
+Task:
+Figure out all the different types that existed in the first game, that is the first 151 pokemons and print it as a list.
+example: normal, fighting, flying, poision, ground etc.
+
+Bonus task:
+For all the different types found, create a file for each type that contains a list of all pokemon that have that type.
+example:
+filename: fire.json
+[
+	{
+		id:4,
+		name: "charmander"
+	},
+	{
+		id:37,
+		name: "vulpix"
+	},
+]
+
+Hints:
+To be able to solve this task there is a few concepts that might be new that you need to know about.
+
+API:
+	Apis are basically datapoints where you ask for something and might get something in return.
+	It has a few actions like GET, POST, DELETE.
+	GET is used if you want information from the api, like the above pokemon api, you just want to see the data.
+	POST is used to send information to the api, like if you update your name on a website a POST is used to send the new name to the server so it can be updated in the database.
+	DELETE is for deleting information, if you want to remove your profile from a website or app
+	In your case you need to figure out how to make an GET request towards the pokeapi in python.
+	
+JSON:
+	"JSON is an open standard file format and data interchange format that uses human-readable text to store and transmit data objects consisting of attribute–value pairs and arrays. It is a common data format with diverse uses in electronic data interchange, including that of web applications with servers." -wikipedia
+	If you go to https://pokeapi.co/api/v2/pokemon/4/ you will be able to see the data but it looks a bit chaotic even though it is actually readable.
+	The data is structured in a format called JSON which makes it easy to work with, and today most api both return JSON and expect data to be sent in JSON.
+	It makes a lot more sense formatted which your browser might or might not do automatically, if not there is a tool for it https://jsonformatter.org/ go there and paste all the data from the above api and you will see a structure that looks a bit like this:
+	{
+		"abilities": [
+			{
+				"ability": {
+				"name": "blaze",
+				"url": "https://pokeapi.co/api/v2/ability/66/"
+				},
+				"is_hidden": false,
+				"slot": 1
+			}
+		]
+	}
+	What does this mean?
+	there is a KEY called "abilities", that contains a list of OBJECTS, each of these OBJECTS have the following KEYs "ability" that contains another object with KEYs "name" and "url", "is_hidden" and "slot"
+	so since "abilities" is a list you could loop on it, and foreach of the objects you could check the values by asking for the different KEYS.
+	like ability.name would return "blaze", ability.slot would return 1 etc.
+	Python should have good support for this built in.
+	
+	So to get started:
+	GET from https://pokeapi.co/api/v2/pokemon/?limit=10
+	from this you will get a list with name and a url.
+	for each of those do another GET to the url(like https://pokeapi.co/api/v2/pokemon/1/) to get the pokemons data.
+	in that data there is a KEY for type, find it and save the type somewhere, make sure that you don't save duplicates of types.
+	if the pokemon have multiple types make sure to catch em all.
+	then print the list of types.
